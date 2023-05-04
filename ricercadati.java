@@ -1,6 +1,7 @@
 import java.io.*;
 public class ricercadati {
         public static void main(String[] args) {
+            //sistemare parte di ricerca dati, 
             String file = "C:\\Users\\Utente\\Desktop\\Progetto Climate Monitoring\\Dati\\Dataset_csv";
             BufferedReader reader = null;
             String line = "";
@@ -24,7 +25,7 @@ public class ricercadati {
             try {
             reader.close();
             } catch (IOException e) {
-            // TODO Auto-generated catch block
+           
             e.printStackTrace();
             }
         }

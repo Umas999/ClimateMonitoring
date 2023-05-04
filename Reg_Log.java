@@ -1,32 +1,30 @@
 import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.lang.model.element.ExecutableElement;
-import javax.swing.*;
-import java.awt.event.*;
+import java.util.Scanner;
 
 
 
-//Realizzata classe per l'operatore, metodi di registrazione e metodi di verifica con bufferedreader, problema di richiamo metodi in classe Main
-class Operatore{
-    private String Nome;
-    private String Cognome;
-    private String CodiceFiscale;
-    private String Email;
-    private String Username;
-    private String Password;
-    private int CodiceAfferenza;
-    private int CAP;
 
-    public Operatore(String Nome,String Cognome,String CodiceFiscale,String Email,String Username, String Password, int CodiceAfferenza, int CAP){
-        this.Nome = Nome;
-        this.Cognome = Cognome;
-        this.CodiceFiscale = CodiceFiscale;
-        this.Email = Email;
-        this.Username = Username;
-        this.Password = Password;
-        this.CodiceAfferenza = CodiceAfferenza;
-        this.CAP = CAP;
+//Realizzata classe per l'operatore, metodi registrazioni funzionanti, manca login con tutte le verifiche necessarie
+
+public class Reg_Log{
+    private static String Nome;
+    private static String Cognome;
+    private static String CodiceFiscale;
+    private static String Email;
+    private static String Username;
+    private static String Password;
+    private static int CodiceAfferenza;
+    private static int CAP;
+
+    public Reg_Log(String Nome,String Cognome,String CodiceFiscale,String Email,String Username, String Password, int CodiceAfferenza, int CAP){
+        Reg_Log.Nome = Nome;
+        Reg_Log.Cognome = Cognome;
+        Reg_Log.CodiceFiscale = CodiceFiscale;
+        Reg_Log.Email = Email;
+        Reg_Log.Username = Username;
+        Reg_Log.Password = Password;
+        Reg_Log.CodiceAfferenza = CodiceAfferenza;
+        Reg_Log.CAP = CAP;
     }
 
     public String GetNome(){
@@ -66,29 +64,61 @@ class Operatore{
         return file.exists();
     }
 
-    public void RegistraUtente(){
+    //Acqusizione dei dati dell'utente per la registrazione
+    public static void RegistraUtente(){
 
         PrintWriter writer = null;
 
-        try{
+        VerificaCredenziali();
+        
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("benvenuto nella registrazione utente, inserisci i dati:");
+            System.out.println("Quale è il tuo nome?");
+            String Nome = scanner.nextLine();
 
-        writer = new PrintWriter("Operatoriregistrati.txt");
-        writer.println( Nome + ":\n" + Cognome + ":\n" + CodiceFiscale + ":\n" + Email + ":\n"+ Username + ":\n" + Password + ":\n " + CodiceAfferenza + ":\n" + CAP + ":\n");
+            System.out.println("Quale è il tuo cognome?");
+            String Cognome = scanner.nextLine();
 
-        } catch(FileNotFoundException ex){
+            System.out.println("Codice fiscale?");                                     
+            String CodiceFiscale = scanner.nextLine();
 
-        System.out.println(ex.getMessage());
+            System.out.println("Email");
+            String Email = scanner.nextLine();
+        
+            System.out.println("Username");
+            String Username = scanner.nextLine();
 
-        }finally{
+            System.out.println("Password");
+            String Password = scanner.nextLine();
 
-            if(writer != null)
-            writer.close();
+            System.out.println("CodiceAfferenza");
+            int CodiceAfferenza = scanner.nextInt();
+            
+            System.out.println("Cap");
+            int CAP = scanner.nextInt();
+            
+            
+            try{
 
+            writer = new PrintWriter("Operatoriregistrati.txt");
+            writer.println( "nome:"+ Nome + "\n" + "cognome:" + Cognome + "\n" + "codice fiscale:" + CodiceFiscale + "\n" +"email: " + Email + "\n" + "username: " + Username + "\n" + "password:" + Password + "\n " + "codice afferenza:" + CodiceAfferenza + "\n" + "CAP:" + CAP );
+
+            } catch(FileNotFoundException ex){
+
+            System.out.println(ex.getMessage());
+
+            }finally{
+
+                if(writer != null)
+                writer.close();
+
+            }
         }
     }
 
-    public boolean VerificaCredenziali(){
-        
+    public static boolean VerificaCredenziali(){
+
+        //Sistemare parte di verifica credenziali, richiedere di reinserire password e username qualora fosse sbagliato
         BufferedReader reader = null;
         try {
             
